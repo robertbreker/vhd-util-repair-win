@@ -2015,7 +2015,7 @@ vhd_write_footer(vhd_context_t *ctx, vhd_footer_t *footer)
 		return err;
 
 	if (!ctx->is_block) {
-		err = ftruncate(ctx->fd, off + sizeof(vhd_footer_t));
+		err = ftruncate64(ctx->fd, off + sizeof(vhd_footer_t));
 		if (err)
 			return -errno;
 	}
@@ -2339,11 +2339,11 @@ namedup(char **dup, const char *name)
 #define vpwrite (ssize_t (*)(int, void *, size_t, off_t))pwrite
 
 static ssize_t
-vhd_atomic_pio(ssize_t (*f) (int, void *, size_t, off_t),
-	       int fd, void *_s, size_t n, off_t off)
+vhd_atomic_pio(ssize_t (*f) (int, void *, size_t, off64_t),
+	       int fd, void *_s, size_t n, off64_t off)
 {
 	char *s = _s;
-	size_t pos = 0;
+	ssize_t pos = 0;
 	ssize_t res;
 	struct stat st;
 

@@ -35,10 +35,10 @@
 #include <sys/types.h>
 
 #define unlikely
-ssize_t pread(int fd, void *buf, size_t count, off_t offset);
+ssize_t pread(int fd, void *buf, size_t count, off64_t offset);
 
 ssize_t pwrite (int fd, const void *buf, size_t count,
-                size_t offset);
+                off64_t offset);
 
 
 
